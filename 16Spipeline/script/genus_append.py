@@ -7,11 +7,15 @@ lines = {}
 result = ""
 entry = "genus"
 for line in f:
-	line2 = line.split("\t")
-	if float(line2[line2.index(entry)+1].split("\n")[0]) > 0.5:
-		lines[line2[0].split(";")[0]] = line2[line2.index(entry)-1]
+	arr = line.split("\t")
+	samplename = arr[0].split(";")[0]
+	column_genus = arr.index(entry)
+	identity = float(arr[column_genus + 1].split("\n")[0])
+	if identity > 0.5:
+		lines[samplename] = arr[column_genus - 1]
 	else:
-		lines[line2[0].split(";")[0]] = "Unclassified"
+		lines[samplename] = "Unclassified"
+
 for LINE in F:
 	tmp = LINE.split("\t")[3]
 	if tmp in lines:
